@@ -1,0 +1,6 @@
+<p>list-machine works!</p>
+<ng-container *ngIf="(page$ | async) as page">
+  <pre>{{ page.page | json }}</pre>
+  <pre>{{ page._links | json }}</pre>
+  <pre *ngFor="let machine of page._embedded.elements">{{ machine._links.self | json }}</pre>
+</ng-container>
