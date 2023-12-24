@@ -1,15 +1,15 @@
 import { Entity } from './entity.model';
 
-export interface Page<T extends Entity> extends Entity {
+export type Page<T extends Entity> = Entity & {
   _embedded: {
     elements: T[];
   };
   page: PageInfo;
-}
+};
 
-export interface PageInfo {
+export type PageInfo = {
   size: Number;
   totalElements: Number;
   totalPages: Number;
   number: Number;
-}
+};
