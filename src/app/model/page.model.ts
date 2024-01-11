@@ -8,8 +8,8 @@ export type Page<T extends Entity> = Entity & {
 };
 
 export type PageInfo = {
-  size: Number;
-  totalElements: Number;
-  totalPages: Number;
-  number: Number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  number: number;
 };

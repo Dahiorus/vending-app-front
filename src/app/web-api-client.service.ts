@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Entity } from '@model/entity.model';
+import { Page } from '@model/page.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,23 +16,37 @@ export class WebApiClientService {
 
   private http = inject(HttpClient);
 
-  get<T>(url: string): Observable<T> {
+  list<T extends Entity>(
+    url: string,
+    queryParams: { [key: string]: any } = {}
+  ): Observable<Page<T>> {
+    const pageParams: HttpParams = new HttpParams({
+      fromObject: { ...queryParams },
+    });
+
+    return this.http.get<Page<T>>(url, {
+      ...this.httpOptions,
+      params: pageParams,
+    });
+  }
+
+  get<T extends Entity>(url: string): Observable<T> {
     return this.http.get<T>(url, this.httpOptions);
   }
 
-  post<T>(url: string, body: any): Observable<T> {
+  post<T extends Entity>(url: string, body: any): Observable<T> {
     return this.http.post<T>(url, body, this.httpOptions);
   }
 
-  put<T>(url: string, body: any): Observable<T> {
+  put<T extends Entity>(url: string, body: any): Observable<T> {
     return this.http.put<T>(url, body, this.httpOptions);
   }
 
-  patch<T>(url: string, body: any): Observable<T> {
+  patch<T extends Entity>(url: string, body: any): Observable<T> {
     return this.http.patch<T>(url, body, this.httpOptions);
   }
 
-  delete<T>(url: string): Observable<T> {
+  delete<T extends Entity>(url: string): Observable<T> {
     return this.http.delete<T>(url);
   }
 }

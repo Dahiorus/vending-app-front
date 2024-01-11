@@ -1,6 +1,11 @@
-<p>list-machine works!</p>
-<ng-container *ngIf="(page$ | async) as page">
-  <pre>{{ page.page | json }}</pre>
-  <pre>{{ page._links | json }}</pre>
-  <pre *ngFor="let machine of page._embedded.elements">{{ machine._links.self | json }}</pre>
-</ng-container>
+@if (pageResponse$ | async; as pageResponse) {
+<app-pagination
+  [pageInfo]="pageResponse.page"
+  [pageLinks]="pageResponse._links"
+  (pageChanged)="goToPage($event)"
+/>
+@for (machine of pageResponse._embedded.elements; track machine.id) {
+<pre>{{ machine | json }}</pre>
+} } @else {
+<p>No result</p>
+}

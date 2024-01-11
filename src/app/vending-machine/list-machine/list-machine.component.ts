@@ -1,27 +1,44 @@
-import { Component, WritableSignal, inject, signal } from '@angular/core';
-import { API_BASE_URL } from '../../api.constants';
-import { WebApiClientService } from '../../web-api-client.service';
-import { Observable } from 'rxjs';
-import { Page } from '../../model/page.model';
 import { CommonModule } from '@angular/common';
-import { VendingMachine } from '../../model/vending-machine.model';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { API_BASE_URL } from '@app/api.constants';
+import { Page } from '@app/model/page.model';
+import { VendingMachine } from '@app/model/vending-machine.model';
+import { PaginationComponent } from '@app/shared/pagination/pagination.component';
+import { WebApiClientService } from '@app/web-api-client.service';
+import { Link } from '@model/entity.model';
+import { Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-list-machine',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './list-machine.component.html',
   styleUrl: './list-machine.component.css',
 })
-export class ListMachineComponent {
-  private baseUrl = `${API_BASE_URL}/vending-machines`;
+export class ListMachineComponent implements OnInit, OnDestroy {
+  private apiClient: WebApiClientService = inject(WebApiClientService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
 
-  private webClient = inject(WebApiClientService);
+  private listingUrl: string = `${API_BASE_URL}/vending-machines`;
 
-  link: WritableSignal<string> = signal(this.baseUrl);
-  page$: Observable<Page<VendingMachine>> = this.getPage();
+  pageResponse$!: Observable<Page<VendingMachine>>;
 
-  getPage(): Observable<Page<VendingMachine>> {
-    return this.webClient.get<Page<VendingMachine>>(this.link());
+  ngOnInit(): void {
+    this.pageResponse$ = this.getPage();
+  }
+
+  ngOnDestroy(): void {}
+
+  private getPage(): Observable<Page<VendingMachine>> {
+    return this.route.queryParams.pipe(
+      switchMap((queryParams) =>
+        this.apiClient.list<VendingMachine>(this.listingUrl, queryParams)
+      )
+    );
+  }
+
+  goToPage(link: Link): void {
+    this.pageResponse$ = this.apiClient.get(link.href);
   }
 }
