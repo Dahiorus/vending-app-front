@@ -20,7 +20,7 @@ export class ListMachineComponent implements OnInit, OnDestroy {
   private apiClient: WebApiClientService = inject(WebApiClientService);
   private route: ActivatedRoute = inject(ActivatedRoute);
 
-  private listingUrl: string = `${API_BASE_URL}/vending-machines`;
+  private readonly listingUrl: string = `${API_BASE_URL}/vending-machines`;
 
   pageResponse$!: Observable<Page<VendingMachine>>;
 
@@ -38,7 +38,7 @@ export class ListMachineComponent implements OnInit, OnDestroy {
     );
   }
 
-  goToPage(link: Link): void {
+  searchMachines(link: Link): void {
     this.pageResponse$ = this.apiClient.get(link.href);
   }
 }

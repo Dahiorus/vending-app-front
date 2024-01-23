@@ -1,8 +1,9 @@
 @if (pageResponse$ | async; as pageResponse) {
 <app-pagination
+  [baseUrl]="'/vending-machines'"
   [pageInfo]="pageResponse.page"
   [pageLinks]="pageResponse._links"
-  (pageChanged)="goToPage($event)"
+  (pageChanged)="searchMachines($event)"
 />
 @for (machine of pageResponse._embedded.elements; track machine.id) {
 <pre>{{ machine | json }}</pre>
