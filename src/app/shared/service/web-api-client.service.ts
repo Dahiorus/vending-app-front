@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Entity } from '@model/entity.model';
 import { Page } from '@model/page.model';
 import { Observable } from 'rxjs';
-import { API_BASE_URL } from './api.constants';
+import { API_BASE_URL } from '../../api.constants';
 
 @Injectable({
   providedIn: 'root',

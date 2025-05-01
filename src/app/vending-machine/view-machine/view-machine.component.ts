@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { API_BASE_URL } from '@app/api.constants';
-import { WebApiClientService } from '@app/web-api-client.service';
+import { WebApiClientService } from '@app/shared/service/web-api-client.service';
 import { VendingMachine } from '@model/vending-machine.model';
 import { Observable, map, switchMap } from 'rxjs';
 

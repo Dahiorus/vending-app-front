@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { API_BASE_URL } from '@app/api.constants';
-import { WebApiClientService } from '@app/web-api-client.service';
+import { WebApiClientService } from '@app/shared/service/web-api-client.service';
 
 @Component({
   selector: 'app-add-machine',

@@ -5,7 +5,7 @@ import { API_BASE_URL } from '@app/api.constants';
 import { Page } from '@app/model/page.model';
 import { VendingMachine } from '@app/model/vending-machine.model';
 import { PaginationComponent } from '@app/shared/pagination/pagination.component';
-import { WebApiClientService } from '@app/web-api-client.service';
+import { WebApiClientService } from '@app/shared/service/web-api-client.service';
 import { Link } from '@model/entity.model';
 import { Observable, switchMap } from 'rxjs';
 
