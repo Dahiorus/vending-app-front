@@ -8,7 +8,6 @@ import { Observable, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-view-machine',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './view-machine.component.html',
   styleUrl: './view-machine.component.css',

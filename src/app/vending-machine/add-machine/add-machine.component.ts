@@ -4,7 +4,6 @@ import { WebApiClientService } from '@app/web-api-client.service';
 
 @Component({
   selector: 'app-add-machine',
-  standalone: true,
   imports: [],
   templateUrl: './add-machine.component.html',
   styleUrl: './add-machine.component.css',

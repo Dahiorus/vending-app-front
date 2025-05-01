@@ -11,7 +11,6 @@ import { Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-list-machine',
-  standalone: true,
   imports: [CommonModule, PaginationComponent],
   templateUrl: './list-machine.component.html',
   styleUrl: './list-machine.component.css',
