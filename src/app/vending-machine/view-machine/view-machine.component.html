@@ -1,1 +1,3 @@
-<p>view-machine works!</p>
+@if (machine$ | async; as machine) {
+<pre>{{ machine | json }}</pre>
+}

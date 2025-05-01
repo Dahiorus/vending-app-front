@@ -24,24 +24,24 @@ export type Address = {
 };
 
 export enum PowerStatus {
-  ON,
-  OFF,
+  ON = 'ON',
+  OFF = 'OFF',
 }
 
 export enum WorkingStatus {
-  OK,
-  WARNING,
-  ERROR,
-  ALERT,
+  OK = 'OK',
+  WARNING = 'WARNING',
+  ERROR = 'ERROR',
+  ALERT = 'ALERT',
 }
 
 export enum CardSystemStatus {
-  ERROR,
-  NORMAL,
+  ERROR = 'ERROR',
+  NORMAL = 'NORMAL',
 }
 
 export enum ChangeSystemStatus {
-  FULL,
-  EMPTY,
-  NORMAL,
+  FULL = 'FULL',
+  EMPTY = 'EMPTY',
+  NORMAL = 'NORMAL',
 }

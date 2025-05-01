@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Entity } from '@model/entity.model';
 import { Page } from '@model/page.model';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from './api.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,10 @@ export class WebApiClientService {
   };
 
   private http = inject(HttpClient);
+
+  getLinks(): Observable<Entity> {
+    return this.http.get<Entity>(`${API_BASE_URL}/`, this.httpOptions);
+  }
 
   list<T extends Entity>(
     url: string,
