@@ -1,11 +1,15 @@
 <div class="pagination">
-  @if (pageLinks["first"]; as firstPage) {
-  <button (click)="changePage(firstPage)">First</button>
-  } @if (pageLinks["prev"]; as previousPage) {
-  <button (click)="changePage(previousPage)">Previous</button>
-  } @if (pageLinks["next"]; as nextPage) {
-  <button (click)="changePage(nextPage)">Next</button>
-  } @if (pageLinks["last"]; as lastPage) {
-  <button (click)="changePage(lastPage)">Last</button>
+  @if (firstPage(); as firstPage) {
+    <button (click)="changePage(firstPage)">First</button>
   }
+  @if (previousPage(); as previousPage) {
+    <button (click)="changePage(previousPage)">Previous</button>
+  }
+  @if (nextPage(); as nextPage) {
+    <button (click)="changePage(nextPage)">Next</button>
+  }
+  @if (lastPage(); as lastPage) {
+    <button (click)="changePage(lastPage)">Last</button>
+  }
+  <span>Page {{ pageNumber() }} on {{ pageInfo().totalPages }}</span>
 </div>
