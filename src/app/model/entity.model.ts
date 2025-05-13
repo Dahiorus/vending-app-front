@@ -1,12 +1,12 @@
-export type Entity = {
+export interface Entity {
   readonly _links: Links;
-};
+}
 
-export type Links = {
+export interface Links {
   readonly self: Link;
   readonly [rel: string]: Link;
-};
+}
 
-export type Link = {
+export interface Link {
   readonly href: string;
-};
+}

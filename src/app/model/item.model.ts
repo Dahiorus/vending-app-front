@@ -1,14 +1,14 @@
 import { Entity } from './entity.model';
 
-export type Item = Entity & {
+export interface Item extends Entity {
   readonly id: string;
   name: string;
   type: ItemType;
-  price: Number;
-};
+  price: number;
+}
 
 export enum ItemType {
   HOT_BEVERAGE,
-  COLD_BAVERAGE,
+  COLD_BEVERAGE,
   FOOD,
 }

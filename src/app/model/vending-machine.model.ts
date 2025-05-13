@@ -1,27 +1,27 @@
-import { Entity } from '../model/entity.model';
+import { Entity } from '@model/entity.model';
 import { ItemType } from './item.model';
 
-export type VendingMachine = Entity & {
+export interface VendingMachine extends Entity {
   readonly id: string;
   serialNumber: string;
   address: Address;
   lastIntervention: string;
-  temperature: Number;
+  temperature: number;
   type: ItemType;
   powerStatus: PowerStatus;
   workingStatus: WorkingStatus;
   rfidStatus: CardSystemStatus;
   smartCardStatus: CardSystemStatus;
   changeMoneyStatus: ChangeSystemStatus;
-  price: Number;
-};
+  price: number;
+}
 
-export type Address = {
-  latitude: Number;
-  longitude: Number;
+export interface Address {
+  latitude: number;
+  longitude: number;
   place: string;
   streetAddress: string;
-};
+}
 
 export enum PowerStatus {
   ON = 'ON',

@@ -1,15 +1,26 @@
-import { Entity } from './entity.model';
+import { Entity, Links } from './entity.model';
 
-export type Page<T extends Entity> = Entity & {
-  _embedded: {
-    elements: T[];
-  };
-  page: PageInfo;
-};
+export class Page<T extends Entity> implements Entity {
+  constructor(
+    public readonly _embedded: {
+      readonly elements: T[];
+    },
+    public readonly _links: Links,
+    public readonly page: PageInfo,
+  ) {}
 
-export type PageInfo = {
+  get elements(): T[] {
+    return this._embedded.elements;
+  }
+
+  get links() {
+    return this._links;
+  }
+}
+
+export interface PageInfo {
   size: number;
   totalElements: number;
   totalPages: number;
   number: number;
-};
+}
