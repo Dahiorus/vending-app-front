@@ -4,6 +4,7 @@
   "compilerOptions": {
     "paths": {
       "@model/*": ["./src/app/model/*"],
+      "@shared/*": ["./src/app/model/*"],
       "@app/*": ["./src/app/*"],
     },
     "outDir": "./dist/out-tsc",

@@ -1,12 +1,13 @@
-@if (pageResponse$ | async; as pageResponse) {
-<app-pagination
-  [baseUrl]="'/vending-machines'"
-  [pageInfo]="pageResponse.page"
-  [pageLinks]="pageResponse._links"
-  (pageChanged)="searchMachines($event)"
-/>
-@for (machine of pageResponse._embedded.elements; track machine.id) {
-<pre>{{ machine | json }}</pre>
-} } @else {
-<p>No result</p>
+@if (page$(); as page) {
+  <app-pagination
+    [baseUrl]="'/vending-machines'"
+    [pageInfo]="page.page"
+    [pageLinks]="page.links"
+    (pageChanged)="searchMachines($event)"
+  />
+  @for (machine of page.elements; track machine.id) {
+    <pre>{{ machine | json }}</pre>
+  }
+} @else {
+  <p>No result</p>
 }

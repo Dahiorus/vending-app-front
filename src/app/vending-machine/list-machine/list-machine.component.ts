@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { API_BASE_URL } from '@app/api.constants';
 import { Page } from '@app/model/page.model';
@@ -15,29 +15,29 @@ import { Observable, switchMap } from 'rxjs';
   templateUrl: './list-machine.component.html',
   styleUrl: './list-machine.component.css',
 })
-export class ListMachineComponent implements OnInit, OnDestroy {
-  private apiClient: WebApiClientService = inject(WebApiClientService);
-  private route: ActivatedRoute = inject(ActivatedRoute);
+export class ListMachineComponent {
+  private readonly apiClient: WebApiClientService = inject(WebApiClientService);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   private readonly listingUrl: string = `${API_BASE_URL}/vending-machines`;
 
-  pageResponse$!: Observable<Page<VendingMachine>>;
+  page$ = model.required<Page<VendingMachine>>();
 
-  ngOnInit(): void {
-    this.pageResponse$ = this.getPage();
+  constructor() {
+    this.getPage().subscribe((response) => this.page$.set(response));
   }
 
-  ngOnDestroy(): void {}
-
-  private getPage(): Observable<Page<VendingMachine>> {
+  private getPage() {
     return this.route.queryParams.pipe(
       switchMap((queryParams) =>
-        this.apiClient.list<VendingMachine>(this.listingUrl, queryParams)
-      )
+        this.apiClient.list<VendingMachine>(this.listingUrl, queryParams),
+      ),
     );
   }
 
-  searchMachines(link: Link): void {
-    this.pageResponse$ = this.apiClient.get(link.href);
+  searchMachines(link: Link) {
+    this.apiClient
+      .list<VendingMachine>(link.href)
+      .subscribe((response) => this.page$.set(response));
   }
 }
