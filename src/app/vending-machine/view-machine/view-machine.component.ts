@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { API_BASE_URL } from '@app/api.constants';
 import { WebApiClientService } from '@app/shared/service/web-api-client.service';
 import { VendingMachine } from '@model/vending-machine.model';
-import { Observable, map, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
+import { VENDING_MACHINE_API_URL } from '@app/api.constants';
 
 @Component({
   selector: 'app-view-machine',
@@ -12,24 +12,22 @@ import { Observable, map, switchMap } from 'rxjs';
   templateUrl: './view-machine.component.html',
   styleUrl: './view-machine.component.css',
 })
-export class ViewMachineComponent implements OnInit {
-  private apiClient: WebApiClientService = inject(WebApiClientService);
-  private route: ActivatedRoute = inject(ActivatedRoute);
+export class ViewMachineComponent {
+  private readonly apiClient: WebApiClientService = inject(WebApiClientService);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
-  private readonly baseUrl: string = `${API_BASE_URL}/vending-machines`;
+  machine$ = model.required<VendingMachine>();
 
-  machine$!: Observable<VendingMachine>;
-
-  ngOnInit(): void {
-    this.machine$ = this.getMachine();
+  constructor() {
+    this.getMachine().subscribe((response) => this.machine$.set(response));
   }
 
-  private getMachine(): Observable<VendingMachine> {
+  private getMachine() {
     return this.route.params.pipe(
       map((params) => params['id']),
       switchMap((id) =>
-        this.apiClient.get<VendingMachine>(`${this.baseUrl}/${id}`)
-      )
+        this.apiClient.get<VendingMachine>(`${VENDING_MACHINE_API_URL}/${id}`),
+      ),
     );
   }
 }

@@ -1,3 +1,5 @@
-@if (machine$ | async; as machine) {
-<pre>{{ machine | json }}</pre>
+@if (machine$(); as machine) {
+  <pre>{{ machine | json }}</pre>
+} @else {
+  <p>No result</p>
 }

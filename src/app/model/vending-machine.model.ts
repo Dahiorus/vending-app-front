@@ -3,7 +3,7 @@ import { ItemType } from './item.model';
 
 export interface VendingMachine extends Entity {
   readonly id: string;
-  serialNumber: string;
+  readonly serialNumber: string;
   address: Address;
   lastIntervention: string;
   temperature: number;
@@ -13,7 +13,6 @@ export interface VendingMachine extends Entity {
   rfidStatus: CardSystemStatus;
   smartCardStatus: CardSystemStatus;
   changeMoneyStatus: ChangeSystemStatus;
-  price: number;
 }
 
 export interface Address {
