@@ -5,9 +5,19 @@
     [pageLinks]="page.links"
     (pageChanged)="searchMachines($event)"
   />
-  @for (machine of page.elements; track machine.id) {
-    <pre>{{ machine | json }}</pre>
-  }
+
+  <mat-table [dataSource]="dataSource$()">
+    @for (column of displayedColumns; track column) {
+      <ng-container [matColumnDef]="column">
+        <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span>{{ element[column] }}</span>
+        </mat-cell>
+      </ng-container>
+    }
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="viewMachine(row.id)"></mat-row>
+  </mat-table>
 } @else {
   <p>No result</p>
 }

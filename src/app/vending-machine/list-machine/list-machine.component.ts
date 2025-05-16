@@ -1,18 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, model } from '@angular/core';
+import { Component, computed, inject, model, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VENDING_MACHINE_API_URL } from '@app/api.constants';
 import { Page } from '@app/model/page.model';
 import { VendingMachine } from '@app/model/vending-machine.model';
-import { PaginationComponent } from '@app/shared/pagination/pagination.component';
 import { WebApiClientService } from '@app/shared/service/web-api-client.service';
 import { Link } from '@model/entity.model';
 import { switchMap } from 'rxjs';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { PaginationComponent } from '@app/shared/pagination/pagination.component';
 
 @Component({
   selector: 'app-list-machine',
-  imports: [CommonModule, PaginationComponent],
+  imports: [CommonModule, PaginationComponent, MatTableModule],
   templateUrl: './list-machine.component.html',
   styleUrl: './list-machine.component.css',
 })
@@ -21,9 +23,19 @@ export class ListMachineComponent {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly router: Router = inject(Router);
 
-  private readonly listingUrl: string = `${API_BASE_URL}/vending-machines`;
+  displayedColumns = ['serialNumber', 'type', 'powerStatus', 'workingStatus'];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   page$ = model.required<Page<VendingMachine>>();
+
+  dataSource$ = computed(() => {
+    const table = new MatTableDataSource(this.page$().elements);
+    table.paginator = this.paginator;
+    table.sort = this.sort;
+    return table;
+  });
 
   constructor() {
     this.getPage().subscribe((response) => this.page$.set(response));
